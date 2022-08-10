@@ -1,0 +1,3 @@
+flask
+azure-storage
+flask-cors

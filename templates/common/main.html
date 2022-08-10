@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/custom.css')}}">
+        <script src="{{ url_for('static', filename='js/bootstrap.js')}}"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Praise&family=Quicksand&family=Roboto:ital,wght@0,100;0,400;1,100;1,400&display=swap" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="border bottom row">
+                <div class="col-6 py-1">
+                    <a href="{{url_for('upload_file')}}" style="text-decoration:none ;"><h2 style="font-family: 'Quicksand', sans-serif;margin-bottom: 0px;" class="text-primary">Retail</h2></a>
+                </div>
+                <div class="d-sm-none col-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="pr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="height: 38px;color: rgb(156 163 175);float: right;cursor: pointer;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                      </svg>
+                </div>
+                
+            </div>
+        </div>
+        {% block content %}
+
+        {% endblock %}
+    </body>
+</html>

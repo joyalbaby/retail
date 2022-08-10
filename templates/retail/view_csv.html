@@ -1,0 +1,60 @@
+{% extends 'common/main.html' %}
+
+{% block head %}
+{{super()}}
+<title>Retail - View CSV</title>
+
+{% endblock %}
+
+{% block content %}
+<div class="container my-3 border">
+    <div class="row">
+        <h6 class="text-primary"> {{filename}}</h6>
+    </div>
+    <form method="POST" action="/save">
+    <div class="row  p-2" style="border-radius: 4px;">
+        <input type="hidden" name="filename" value="{{filename}}"/>
+    <table>
+        {% if header %}
+            <thead>
+                <tr class="bg-light">
+                {% for d in range(len(data[0])) %}
+                    <th class="text-muted">{{data[0][d]}}</th>
+                    <input type="hidden" name="{{d}}" value="{{data[0][d]}}"/>
+                {% endfor %}
+            </tr>
+            </thead>
+        {% endif %}
+        
+        <tbody>
+            {% if not header %}
+            {% for row in data %}
+                <tr>
+                    {% for d in range(len(row)) %}
+                        <td><input type="text" name="{{d}}" value="{{row[d]}}"/></td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            {% else %}
+            {% for row in data[1:] %}
+                <tr>
+                    {% for d in range(len(row)) %}
+                        <td><input type="text" name="{{d}}" value="{{row[d]}}"/></td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    </div>
+    <div class="row my-2">
+        <div class="col-12">
+            <button type="submit" class="btn btn-sm btn-primary mb-3" style="float: right;">Save</button>
+        </div>
+        
+    </div>
+</div>
+</form>
+</div>
+
+{% endblock %}
