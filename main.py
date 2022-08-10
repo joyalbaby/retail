@@ -1,4 +1,4 @@
-import re
+import os
 from flask import Flask, render_template, request
 from azure.storage.blob import BlockBlobService
 account = os.environ.get('account')
