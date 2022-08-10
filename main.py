@@ -1,10 +1,10 @@
 import re
 from flask import Flask, render_template, request
 from azure.storage.blob import BlockBlobService
-account = 'tigerdemostorage'
-key = 'eAmI0aZjfznyGDH0vzUh9KDsH3bK2pltN4HUr8BJ85NIEuTneMFLGQzJrMLnw0zolTl+DVa9ANDS+ASt6VY9yQ=='
+account = os.environ.get('account')
+key = os.environ.get('key')
 blob_service = BlockBlobService(account_name=account, account_key=key)
-container = 'tigerdemocontainer'
+container = os.environ.get('container')
 
 app = Flask(__name__)
 
