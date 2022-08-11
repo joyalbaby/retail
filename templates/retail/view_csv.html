@@ -14,7 +14,7 @@
     <form method="POST" action="/save">
     <div class="row  p-2" style="border-radius: 4px;">
         <input type="hidden" name="filename" value="{{filename}}"/>
-    <table>
+    <table id="csv_table">
         {% if header %}
             <thead>
                 <tr class="bg-light">
@@ -33,6 +33,7 @@
                     {% for d in range(len(row)) %}
                         <td><input type="text" name="{{d}}" value="{{row[d]}}"/></td>
                     {% endfor %}
+                    <td><button type="button" class="text-danger btn btn-sm remove_row">X</button></td>
                 </tr>
             {% endfor %}
             {% else %}
@@ -41,6 +42,7 @@
                     {% for d in range(len(row)) %}
                         <td><input type="text" name="{{d}}" value="{{row[d]}}"/></td>
                     {% endfor %}
+                    <td><button type="button" class="text-danger btn btn-sm remove_row">X</button></td>
                 </tr>
             {% endfor %}
             {% endif %}
@@ -49,11 +51,25 @@
     </div>
     <div class="row my-2">
         <div class="col-12">
-            <button type="submit" class="btn btn-sm btn-primary mb-3" style="float: right;">Save</button>
+            
+            <button type="submit" class="btn btn-sm btn-primary mx-1" style="float: right;">Save</button>
+            <button type="button" class="btn btn-sm btn-primary " style="float: right;"" id="add_row"> + Add row</button>
         </div>
     </div>
 </div>
 </form>
 </div>
+<script>
+    $(document).ready(function(){
+    $("#add_row").click(function(){
+        var new_row = $("#csv_table tbody tr:last").clone();
+        new_row.find('input').val('');
+        new_row.appendTo('#csv_table tbody');
+    });
 
+    $(document).on("click", ".remove_row" , function() {
+        $(this).closest('tr').remove()
+    });
+});
+</script>
 {% endblock %}
