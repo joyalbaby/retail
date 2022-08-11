@@ -17,6 +17,11 @@
     <table id="csv_table">
         {% if header %}
             <thead>
+                <tr>
+                {% for d in range(len(data[0])) %}
+                        <td><input type="text" name="{{d}}" value="" placeholder="Search" class="search"/></td>
+                {% endfor %}
+            </tr>
                 <tr class="bg-light">
                 {% for d in range(len(data[0])) %}
                     <th class="text-muted">{{data[0][d]}}</th>
@@ -69,6 +74,17 @@
 
     $(document).on("click", ".remove_row" , function() {
         $(this).closest('tr').remove()
+    });
+    $(document).on("keyup", ".search" , function(e) {
+        var search = $(this).val().toLowerCase();
+        var index = parseInt($(this).attr('name'))+1 
+        var selector = '#csv_table tbody tr td:nth-child('+index+'):visible input'
+        $(selector).each(function (i,ele) {
+            if($(ele).val().toLowerCase()!= search && search != '')
+                $(ele).closest('tr').hide()
+            else
+            $(ele).closest('tr').show()
+        });
     });
 });
 </script>
