@@ -1,9 +1,10 @@
 import os
 from flask import Flask, render_template, request
-from azure.storage.blob import BlockBlobService
+from azure.storage.blob import BlobServiceClient, BlobClient
 account = os.environ.get('account')
 key = os.environ.get('key')
-blob_service = BlockBlobService(account_name=account, account_key=key)
+connection_string = os.environ.get('connection_string')
+blob_service = BlobServiceClient(account_url=account, credential=key)
 container = os.environ.get('container')
 
 app = Flask(__name__)
@@ -17,10 +18,6 @@ def view_csv():
     file = request.files.get('file')
     header = request.form.get('header')
     filename = file.filename
-    # try:
-    #     blob_service.create_blob_from_stream(container, filename, file)
-    # except Exception:
-    #     print('Exception=' + Exception)
     content = file.read().decode('utf-8')
     data = []
     for row in content.split('\r\n'):
@@ -40,7 +37,8 @@ def save_csv():
     for k in zip(*csv):
         csv_string+=','.join(k)+'\r\n'
     try:
-        blob_client = blob_service.create_blob_from_text(container,filename,csv_string)
+        blob = BlobClient.from_connection_string(conn_str=connection_string, container_name=container, blob_name=filename)
+        blob.upload_blob(csv_string)
     except:
         print('Exception occured')
     return csv_string
